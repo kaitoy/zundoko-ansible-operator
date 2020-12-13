@@ -1,3 +1,7 @@
 ---
 # Use the 'create api' subcommand to add watches to this file.
+- version: v1beta2
+  group: zundokokiyoshi.kaitoy.github.com
+  kind: Hikawa
+  role: hikawa
 # +kubebuilder:scaffold:watch

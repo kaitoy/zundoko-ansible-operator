@@ -1,4 +1,8 @@
 domain: kaitoy.github.com
 layout: ansible.sdk.operatorframework.io/v1
 projectName: zundoko-ansible-operator
+resources:
+- group: zundokokiyoshi
+  kind: Hikawa
+  version: v1beta2
 version: 3-alpha
