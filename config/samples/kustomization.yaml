@@ -1,4 +1,5 @@
 ## Append samples you want in your CSV to this file as resources ##
 resources:
 - zundokokiyoshi_v1beta2_hikawa.yaml
+- zundokokiyoshi_v1beta1_zundoko.yaml
 # +kubebuilder:scaffold:manifestskustomizesamples

@@ -3,4 +3,5 @@
 # It should be run by config/default
 resources:
 - bases/zundokokiyoshi.kaitoy.github.com_hikawas.yaml
+- bases/zundokokiyoshi.kaitoy.github.com_zundokoes.yaml
 # +kubebuilder:scaffold:crdkustomizeresource

@@ -5,4 +5,7 @@ resources:
 - group: zundokokiyoshi
   kind: Hikawa
   version: v1beta2
+- group: zundokokiyoshi
+  kind: Zundoko
+  version: v1beta1
 version: 3-alpha

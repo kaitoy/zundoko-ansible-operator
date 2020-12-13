@@ -1,0 +1,6 @@
+apiVersion: zundokokiyoshi.kaitoy.github.com/v1beta1
+kind: Zundoko
+metadata:
+  name: zundoko-sample
+spec:
+  foo: bar

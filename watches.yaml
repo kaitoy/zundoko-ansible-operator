@@ -4,4 +4,8 @@
   group: zundokokiyoshi.kaitoy.github.com
   kind: Hikawa
   role: hikawa
+- version: v1beta1
+  group: zundokokiyoshi.kaitoy.github.com
+  kind: Zundoko
+  role: zundoko
 # +kubebuilder:scaffold:watch
