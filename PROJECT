@@ -1,0 +1,4 @@
+domain: kaitoy.github.com
+layout: ansible.sdk.operatorframework.io/v1
+projectName: zundoko-ansible-operator
+version: 3-alpha
