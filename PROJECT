@@ -8,4 +8,7 @@ resources:
 - group: zundokokiyoshi
   kind: Zundoko
   version: v1beta1
+- group: zundokokiyoshi
+  kind: Kiyoshi
+  version: v1beta1
 version: 3-alpha

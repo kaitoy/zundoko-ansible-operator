@@ -71,4 +71,21 @@ rules:
       - patch
       - update
       - watch
+  ##
+  ## Rules for zundokokiyoshi.kaitoy.github.com/v1beta1, Kind: Kiyoshi
+  ##
+  - apiGroups:
+      - zundokokiyoshi.kaitoy.github.com
+    resources:
+      - kiyoshis
+      - kiyoshis/status
+      - kiyoshis/finalizers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
 # +kubebuilder:scaffold:rules

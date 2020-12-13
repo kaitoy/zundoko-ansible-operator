@@ -1,0 +1,20 @@
+# permissions for end users to view kiyoshis.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: kiyoshi-viewer-role
+rules:
+- apiGroups:
+  - zundokokiyoshi.kaitoy.github.com
+  resources:
+  - kiyoshis
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - zundokokiyoshi.kaitoy.github.com
+  resources:
+  - kiyoshis/status
+  verbs:
+  - get

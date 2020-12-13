@@ -8,4 +8,8 @@
   group: zundokokiyoshi.kaitoy.github.com
   kind: Zundoko
   role: zundoko
+- version: v1beta1
+  group: zundokokiyoshi.kaitoy.github.com
+  kind: Kiyoshi
+  role: kiyoshi
 # +kubebuilder:scaffold:watch
