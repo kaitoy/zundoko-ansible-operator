@@ -32,11 +32,29 @@ spec:
           spec:
             description: Spec defines the desired state of Hikawa
             type: object
-            x-kubernetes-preserve-unknown-fields: true
+            properties:
+              intervalMillis:
+                type: integer
+                format: int64
+              numZundokos:
+                type: string
+                pattern: '^\d+$'
+              sayKiyoshi:
+                type: boolean
+            required:
+            - intervalMillis
           status:
             description: Status defines the observed state of Hikawa
+            properties:
+              kiyoshied:
+                type: boolean
+              numZundokosSaid:
+                type: string
+                pattern: '^\d+$'
+            required:
+            - numZundokosSaid
+            - kiyoshied
             type: object
-            x-kubernetes-preserve-unknown-fields: true
         type: object
     served: true
     storage: true

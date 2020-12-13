@@ -1,6 +1,6 @@
 apiVersion: zundokokiyoshi.kaitoy.github.com/v1beta2
 kind: Hikawa
 metadata:
-  name: hikawa-sample
+  name: hikawa
 spec:
-  foo: bar
+  intervalMillis: 500

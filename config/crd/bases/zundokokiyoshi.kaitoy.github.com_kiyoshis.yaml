@@ -13,6 +13,13 @@ spec:
   scope: Namespaced
   versions:
   - name: v1beta1
+    additionalPrinterColumns:
+      - name: Say
+        type: string
+        jsonPath: .spec.say
+      - name: Age
+        type: date
+        jsonPath: .metadata.creationTimestamp
     schema:
       openAPIV3Schema:
         description: Kiyoshi is the Schema for the kiyoshis API
@@ -32,11 +39,14 @@ spec:
           spec:
             description: Spec defines the desired state of Kiyoshi
             type: object
-            x-kubernetes-preserve-unknown-fields: true
+            properties:
+              say:
+                type: string
+            required:
+            - say
           status:
             description: Status defines the observed state of Kiyoshi
             type: object
-            x-kubernetes-preserve-unknown-fields: true
         type: object
     served: true
     storage: true
