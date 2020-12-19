@@ -1,6 +1,0 @@
-apiVersion: zundokokiyoshi.kaitoy.github.com/v1beta1
-kind: Kiyoshi
-metadata:
-  name: kiyoshi-sample
-spec:
-  foo: bar

@@ -1,2 +1,92 @@
----
-# tasks file for Hikawa
+- name: Get a list of all Zundokos
+  community.kubernetes.k8s_info:
+    api_version:  zundokokiyoshi.kaitoy.github.com/v1beta1
+    kind: Zundoko
+    namespace: '{{ ansible_operator_meta.namespace }}'
+    label_selectors:
+    - hikawa.zundokokiyoshi.kaitoy.github.com = {{ ansible_operator_meta.name }}
+  register: zundoko_list
+
+- name: Update Hikawa status
+  when: _zundokokiyoshi_kaitoy_github_com_hikawa.status.kiyoshied is not defined or not _zundokokiyoshi_kaitoy_github_com_hikawa.status.kiyoshied
+  operator_sdk.util.k8s_status:
+    api_version: zundokokiyoshi.kaitoy.github.com/v1beta2
+    kind: Hikawa
+    name: '{{ ansible_operator_meta.name }}'
+    namespace: '{{ ansible_operator_meta.namespace }}'
+    status:
+      numZundokosSaid: '{{ zundoko_list.resources | length }}'
+      kiyoshied: false
+
+- name: Create a Zundoko
+  when: (zundoko_list.resources | length ) < (num_zundokos | int)
+  block:
+  - name: Do create a Zundoko
+    community.kubernetes.k8s:
+      state: present
+      definition:
+        apiVersion: zundokokiyoshi.kaitoy.github.com/v1beta1
+        kind: Zundoko
+        metadata:
+          name: '{{ ansible_operator_meta.name }}-zundoko-{{ num_zundokos.zfill(4) }}'
+          namespace: '{{ ansible_operator_meta.namespace }}'
+          labels:
+            hikawa.zundokokiyoshi.kaitoy.github.com: '{{ ansible_operator_meta.name }}'
+        spec:
+          say: '{{ ["Zun", "Doko"] | random }}'
+  - name: Go to next loop
+    fail:
+      msg: Fail Intentionally in order to go to next loop
+
+- name: Judge
+  when: (zundoko_list.resources | length | string) == num_zundokos and not say_kiyoshi
+  vars:
+    zundokos: '{{ zundoko_list.resources | sort(attribute="metadata.name") | map(attribute="spec") | map(attribute="say") | join(" ") }}'
+  block:
+  - name: Increment numZundokos
+    when: not zundokos.endswith('Zun Zun Zun Zun Doko')
+    community.kubernetes.k8s:
+      state: present
+      definition:
+        apiVersion: zundokokiyoshi.kaitoy.github.com/v1beta2
+        kind: Hikawa
+        metadata:
+          name: '{{ ansible_operator_meta.name }}'
+          namespace: '{{ ansible_operator_meta.namespace }}'
+        spec:
+          numZundokos: '{{ (num_zundokos | int) + 1 }}'
+  - name: Set sayKiyoshi to True
+    when: zundokos.endswith('Zun Zun Zun Zun Doko')
+    community.kubernetes.k8s:
+      state: present
+      definition:
+        apiVersion: zundokokiyoshi.kaitoy.github.com/v1beta2
+        kind: Hikawa
+        metadata:
+          name: '{{ ansible_operator_meta.name }}'
+          namespace: '{{ ansible_operator_meta.namespace }}'
+        spec:
+          sayKiyoshi: true
+
+- name: Kiyoshi !
+  when: say_kiyoshi and not _zundokokiyoshi_kaitoy_github_com_hikawa.status.kiyoshied
+  block:
+  - name: Create a Kiyoshi
+    community.kubernetes.k8s:
+      state: present
+      definition:
+        apiVersion: zundokokiyoshi.kaitoy.github.com/v1beta1
+        kind: Kiyoshi
+        metadata:
+          name: '{{ ansible_operator_meta.name }}-kiyoshi'
+          namespace: '{{ ansible_operator_meta.namespace }}'
+        spec:
+          say: 'Kiyoshi !'
+  - name: Update kiyoshied
+    operator_sdk.util.k8s_status:
+      api_version: zundokokiyoshi.kaitoy.github.com/v1beta2
+      kind: Hikawa
+      name: '{{ ansible_operator_meta.name }}'
+      namespace: '{{ ansible_operator_meta.namespace }}'
+      status:
+        kiyoshied: true
